@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CaveLive - Live Streaming</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Watch live cricket streaming in HD quality on CaveLive. Multiple servers and mobile-friendly streaming for the best viewing experience.">
+    <meta name="keywords" content="live cricket streaming, live sports, cricket live, HD streaming, mobile streaming">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Add HLS.js for stream playback -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    
+<style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-color: #0f172a;
+            --card-color: #1e293b;
+            --text-color: #e2e8f0;
+            --accent-color: #3b82f6;
+            --error-color: #ef4444;
+            --success-color: #22c55e;
+        }
+
+        * {
+    margin: 0;
+    padding: 0;     
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--card-color);
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            fill: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-left: auto;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(239, 68, 68, 0.2);
+            border-radius: 6px;
+            color: #ef4444;
+            font-weight: 500;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        .back-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .back-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        main {
+            margin-top: 80px;
+            flex-grow: 1;
+            padding: 2rem 0;
+        }
+
+        .stream-container {
+            background-color: var(--card-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+    overflow: hidden;
+            background-color: #000;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+    width: 100%;
+    height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--card-color);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .match-info {
+            padding: 1.5rem;
+            background: linear-gradient(to right, var(--card-color), var(--background-color));
+        }
+
+        .match-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .match-details {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .server-controls {
+            background-color: var(--card-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .server-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .server-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .server-button {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .server-button:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .server-button.active {
+            background-color: var(--primary-color);
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        }
+
+        .error-message {
+            background-color: var(--error-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .quality-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .quality-high {
+            background-color: var(--success-color);
+        }
+
+        .quality-medium {
+            background-color: #eab308;
+        }
+
+        .quality-low {
+            background-color: var(--error-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .match-title {
+                font-size: 1.2rem;
+            }
+
+            .server-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .menu-button {
+                background: none;
+    border: none;
+                color: var(--text-color);
+                cursor: pointer;
+                padding: 0.5rem;
+                display: block;
+            }
+
+            .menu-button svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .stream-container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+        }
+
+        footer {
+            background-color: var(--card-color);
+            padding: 1.5rem 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            text-align: center;
+            font-size: 0.875rem;
+            color: #94a3b8;
+}
+</style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24">
+                        <path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm0 2.84L19.5 12H18v7h-4v-6H8v6H4v-7H2.5L12 4.84z"/>
+                    </svg>
+                    CaveLive
+                </a>
+                <nav class="nav-links">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/live.html" class="nav-link active">Live</a>
+                    <a href="/schedule.html" class="nav-link">Schedule</a>
+                    <div class="live-indicator">
+                        <span class="live-dot"></span>
+                        LIVE
+                    </div>
+                </nav>
+                <div class="mobile-nav">
+                    <div class="live-indicator">
+                        <span class="live-dot"></span>
+                        LIVE
+                    </div>
+                    <button class="menu-button">
+                        <svg viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="stream-container">
+                <div class="video-container">
+                    <div id="loadingOverlay" class="loading-overlay">
+                        <div class="spinner"></div>
+                    </div>
+                    <video id="videoPlayer" controls playsinline></video>
+                </div>
+                <div class="match-info">
+                    <h1 class="match-title" id="matchTitle">Loading match details...</h1>
+                    <p class="match-details" id="matchDetails">Please wait while we set up your stream</p>
+                </div>
+            </div>
+
+            <div id="errorMessage" class="error-message">
+                Unable to load stream. Trying alternative server...
+            </div>
+
+            <div class="server-controls">
+                <h2 class="server-title">Select Server</h2>
+                <div class="server-buttons" id="serverButtons">
+                    <button class="server-button" data-server="1">
+                        <span class="quality-indicator quality-high"></span>Server 1
+                    </button>
+                    <button class="server-button" data-server="2">
+                        <span class="quality-indicator quality-high"></span>Server 2
+                    </button>
+                    <button class="server-button" data-server="3">
+                        <span class="quality-indicator quality-high"></span>Server 3
+                    </button>
+                    <button class="server-button" data-server="4">
+                        <span class="quality-indicator quality-medium"></span>Server 4
+                    </button>
+                    <button class="server-button" data-server="5">
+                        <span class="quality-indicator quality-medium"></span>Server 5
+                    </button>
+                    <button class="server-button" data-server="6">
+                        <span class="quality-indicator quality-medium"></span>Server 6
+                    </button>
+                    <button class="server-button" data-server="7">
+                        <span class="quality-indicator quality-high"></span>Server 7
+                    </button>
+                    <button class="server-button" data-server="8">
+                        <span class="quality-indicator quality-high"></span>Server 8
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2024 CaveLive. All rights reserved.</p>
+                <p>Disclaimer: Streams are provided by third-party sources.</p>
+            </div>
+        </div>
+    </footer>
+    
+<script>
+        // Stream URLs for different matches with actual HLS streams
+        const streamUrls = {
+            'ipl2': {
+                1: 'https://funn-g1163.huibo.tv/GPA/H923/chunks.m3u8?p=48&cf=1742738596&d=&ip=126.115.249.216&e=1742799196&h=e1fb0c82b177f1d876ae0003deef4c25',
+                2: 'https://customer-0agod1prlrzpzm4j.cloudflarestream.com/611fd4d3eb0a3f4238c34828bc5e9770/manifest/video.m3u8',
+                3: 'https://jf5.dunyapurkaraja.com:999/hls/sky3nz.m3u8?md5=XGOAA0kJBlQFPM-081bCSQ&expires=1742629018',
+                4: 'https://director.taihotel.asia/v3/director/VE1ODgzYTAxZjAzMGMyLTc1Y2ItNDJlNC0zMDM3LTQ2MzNlYTJl/master.m3u8',
+                5: 'https://customer-7mzwznbptbg8bj9x.cloudflarestream.com/7f6d54a5c214e8b101164d5ec0430cc8/manifest/video.m3u8',
+                6: 'https://ns1.wikisport.cc/live/d7dbbb00.m3u8?token=uBubv4e7k5MAL1AYBoflIBEnUYU3vRks244Hybrl1ACV3sPoRtrYyKreKmK4JlB3lD7Q',
+                7: 'https://ns1.wikisport.cc/live/49a6f2bd.m3u8?token=CovsPoRtEkOxO32yvK6InxFXjrjkz8dXCBCg9IB3HbfTqkxwIkIg92TPdpOHeZpyJr9RVB0',
+                8: 'https://v18tataplaysyndication.akamaized.net/bpk-tv/Sports18_1_HD_voot_MOB/output03/hdntl=exp=1741591702~acl=%2f*~data=hdntl~hmac=4a62fdb483f3d28a3f341ce4fdc75831597ba3cd81b5b0deff094fb4734727a9/Sports18_1_HD_voot_MOB-audio_108038_eng=108000-video=3728000.m3u8'
+            }
+        };
+
+        let hls = null;
+        let isAutoSwitching = false;
+        
+        // Get match ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const matchId = urlParams.get('id') || 'ipl2';
+        let currentServer = 1;
+        let retryCount = 0;
+        const maxRetries = 3;
+
+        // Initialize stream
+        function initializeStream() {
+            setMatchInfo(matchId);
+            setURL(matchId, currentServer);
+            updateServerButtons();
+        }
+
+        // Set match information
+        function setMatchInfo(matchId) {
+            const matchTitles = {
+                'ipl2': 'IPL 2024 Live'
+            };
+
+            const matchDetails = {
+                'ipl2': 'Live Cricket Streaming'
+            };
+
+            document.getElementById('matchTitle').textContent = matchTitles[matchId] || 'Live Match';
+            document.getElementById('matchDetails').textContent = matchDetails[matchId] || 'Live Cricket';
+        }
+
+        // Set stream URL with HLS support
+        function setURL(matchId, server) {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const errorMessage = document.getElementById('errorMessage');
+            const videoPlayer = document.getElementById('videoPlayer');
+            
+            loadingOverlay.style.display = 'flex';
+            errorMessage.style.display = 'none';
+
+            const url = streamUrls[matchId][server];
+            if (!url) {
+                handleStreamError();
+                return;
+            }
+
+            // Destroy existing HLS instance if any
+            if (hls) {
+                hls.destroy();
+                hls = null;
+            }
+
+            // Create new HLS instance
+            if (Hls.isSupported()) {
+                hls = new Hls({
+                    debug: true, // Enable debug mode to see errors
+                    enableWorker: true,
+                    lowLatencyMode: true,
+                    backBufferLength: 90,
+                    xhrSetup: function(xhr, url) {
+                        // Set headers based on the stream source
+                        if (url.includes('huibo.tv')) {
+                            xhr.withCredentials = false;
+                            xhr.setRequestHeader('Origin', 'https://huibo.tv');
+                            xhr.setRequestHeader('Referer', 'https://huibo.tv/');
+                        } else if (url.includes('cloudflarestream.com')) {
+                            xhr.withCredentials = false;
+                        } else if (url.includes('dunyapurkaraja.com')) {
+                            xhr.withCredentials = false;
+                            xhr.setRequestHeader('Origin', 'https://dunyapurkaraja.com');
+                            xhr.setRequestHeader('Referer', 'https://dunyapurkaraja.com/');
+                        } else if (url.includes('taihotel.asia')) {
+                            xhr.withCredentials = false;
+                            xhr.setRequestHeader('Origin', 'https://taihotel.asia');
+                            xhr.setRequestHeader('Referer', 'https://taihotel.asia/');
+                        } else if (url.includes('wikisport.cc')) {
+                            xhr.withCredentials = false;
+                            xhr.setRequestHeader('Origin', 'https://wikisport.cc');
+                            xhr.setRequestHeader('Referer', 'https://wikisport.cc/');
+                        } else if (url.includes('akamaized.net')) {
+                            xhr.withCredentials = false;
+                        }
+                        
+                        xhr.setRequestHeader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
+                    },
+                    manifestLoadingTimeOut: 20000, // Increase timeout
+                    manifestLoadingMaxRetry: 3,    // Allow retries
+                    levelLoadingTimeOut: 20000,    // Increase segment timeout
+                    levelLoadingMaxRetry: 3        // Allow segment retries
+                });
+
+                hls.loadSource(url);
+                hls.attachMedia(videoPlayer);
+
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    loadingOverlay.style.display = 'none';
+                    videoPlayer.play().catch(function(error) {
+                        console.log("Play failed:", error);
+                        showPlayButton();
+                    });
+                });
+
+                hls.on(Hls.Events.ERROR, function(event, data) {
+                    console.log('HLS Error:', data.type, data.details, data.fatal);
+                    if (data.fatal) {
+                        handleStreamError();
+                    }
+                });
+            }
+            // For browsers that natively support HLS
+            else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+                videoPlayer.src = url;
+                videoPlayer.addEventListener('loadedmetadata', function() {
+                    loadingOverlay.style.display = 'none';
+                    videoPlayer.play().catch(function(error) {
+                        console.log("Play failed:", error);
+                        showPlayButton();
+                    });
+                });
+
+                videoPlayer.addEventListener('error', function(e) {
+                    console.log('Video Error:', videoPlayer.error);
+                    handleStreamError();
+                });
+            }
+        }
+
+        // Handle stream errors
+        function handleStreamError() {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Stream error. Please try a different server. If all servers fail, the stream may be offline.';
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Show play button overlay
+        function showPlayButton() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.innerHTML = `
+                <button onclick="playVideo()" style="background: var(--primary-color); color: white; padding: 1rem 2rem; border: none; border-radius: 8px; cursor: pointer;">
+                    Play Video
+                </button>
+            `;
+            loadingOverlay.style.display = 'flex';
+        }
+
+        // Play video function
+        function playVideo() {
+            const videoPlayer = document.getElementById('videoPlayer');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.style.display = 'none';
+            videoPlayer.play().catch(console.error);
+        }
+
+        // Update server buttons
+        function updateServerButtons() {
+            const buttons = document.querySelectorAll('.server-button');
+            buttons.forEach(button => {
+                const serverNum = parseInt(button.dataset.server);
+                button.classList.toggle('active', serverNum === currentServer);
+            });
+        }
+
+        // Add click handlers to server buttons
+        document.querySelectorAll('.server-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const server = parseInt(button.dataset.server);
+                if (server !== currentServer) {
+                    currentServer = server;
+                    retryCount = 0;
+                    setURL(matchId, currentServer);
+                    updateServerButtons();
+                }
+            });
+        });
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeStream);
+</script>
+</body>
+</html>
