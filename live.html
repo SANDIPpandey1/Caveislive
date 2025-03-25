@@ -3,11 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CaveLive - Live Streaming</title>
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Watch live cricket streaming in HD quality on CaveLive. Multiple servers and mobile-friendly streaming for the best viewing experience.">
-    <meta name="keywords" content="live cricket streaming, live sports, cricket live, HD streaming, mobile streaming">
+    <!-- Primary Meta Tags -->
+    <title>IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot</title>
+    <meta name="title" content="IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot">
+    <meta name="description" content="Watch IPL 2024 live streaming in HD quality on CryptoNewSpot. Free live cricket streaming with multiple servers, mobile-friendly interface, and real-time match updates. Stream all IPL matches, including playoffs and finals.">
+    <meta name="keywords" content="IPL 2024 live streaming, cricket live streaming, IPL matches, T20 cricket, live cricket, HD cricket streaming, mobile cricket streaming, IPL playoffs, cricket matches, sports streaming">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cryptonewspot.com/">
+    <meta property="og:title" content="IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot">
+    <meta property="og:description" content="Watch IPL 2024 live streaming in HD quality on CryptoNewSpot. Free live cricket streaming with multiple servers, mobile-friendly interface, and real-time match updates.">
+    <meta property="og:image" content="https://cryptonewspot.com/assets/images/ipl-2024-banner.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://cryptonewspot.com/">
+    <meta property="twitter:title" content="IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot">
+    <meta property="twitter:description" content="Watch IPL 2024 live streaming in HD quality on CryptoNewSpot. Free live cricket streaming with multiple servers, mobile-friendly interface, and real-time match updates.">
+    <meta property="twitter:image" content="https://cryptonewspot.com/assets/images/ipl-2024-banner.jpg">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="author" content="CryptoNewSpot">
+    <meta name="revisit-after" content="1 days">
+    <meta name="generator" content="CryptoNewSpot">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://cryptonewspot.com/">
     
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -83,7 +108,7 @@
         .logo-icon {
             width: 32px;
             height: 32px;
-            fill: var(--primary-color);
+            fill: currentColor;
         }
 
         .nav-links {
@@ -377,16 +402,16 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="/Caveislive/" class="logo">
+                <a href="/" class="logo">
                     <svg class="logo-icon" viewBox="0 0 24 24">
                         <path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm0 2.84L19.5 12H18v7h-4v-6H8v6H4v-7H2.5L12 4.84z"/>
                     </svg>
-                    CaveLive
+                    CryptoNewSpot
                 </a>
                 <nav class="nav-links">
-                    <a href="/Caveislive/" class="nav-link">Home</a>
-                    <a href="/live.html" class="nav-link active">Live</a>
-                    <a href="/Caveislive/" class="nav-link">Schedule</a>
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/live.html" class="nav-link active">Live IPL</a>
+                    <a href="/schedule.html" class="nav-link">IPL Schedule</a>
                     <div class="live-indicator">
                         <span class="live-dot"></span>
                         LIVE
@@ -417,8 +442,8 @@
                     <video id="videoPlayer" controls playsinline></video>
                 </div>
                 <div class="match-info">
-                    <h1 class="match-title" id="matchTitle">Loading match details...</h1>
-                    <p class="match-details" id="matchDetails">Please wait while we set up your stream</p>
+                    <h1 class="match-title" id="matchTitle">IPL 2024 Live Streaming</h1>
+                    <p class="match-details" id="matchDetails">Watch IPL 2024 matches in HD quality with multiple streaming options</p>
                 </div>
             </div>
 
@@ -427,81 +452,67 @@
             </div>
 
             <div class="server-controls">
-                <h2 class="server-title">Select Server</h2>
+                <h2 class="server-title">Select Streaming Server</h2>
                 <div class="server-buttons" id="serverButtons">
                     <!-- IPL Streams -->
                     <button class="server-button" data-server="ppv">
-                        <span class="quality-indicator quality-high"></span>IPL PPV
+                        <span class="quality-indicator quality-high"></span>IPL PPV HD
                     </button>
                     <button class="server-button" data-server="s11">
-                        <span class="quality-indicator quality-high"></span>IPL T20
+                        <span class="quality-indicator quality-high"></span>IPL T20 HD
                     </button>
                     <button class="server-button" data-server="tsports">
-                        <span class="quality-indicator quality-high"></span>IPL T20
+                        <span class="quality-indicator quality-high"></span>IPL T20 HD
                     </button>
                     <button class="server-button" data-server="glive">
-                        <span class="quality-indicator quality-medium"></span>IPL T20
+                        <span class="quality-indicator quality-medium"></span>IPL T20 SD
                     </button>
                     <button class="server-button" data-server="bd">
-                        <span class="quality-indicator quality-medium"></span>IPL T20
+                        <span class="quality-indicator quality-medium"></span>IPL T20 SD
                     </button>
                     <button class="server-button" data-server="sky1">
-                        <span class="quality-indicator quality-high"></span>IPL T20
+                        <span class="quality-indicator quality-high"></span>IPL T20 HD
                     </button>
                     <button class="server-button" data-server="sky3">
-                        <span class="quality-indicator quality-high"></span>IPL T20
+                        <span class="quality-indicator quality-high"></span>IPL T20 HD
                     </button>
                     <button class="server-button" data-server="sky3ii">
-                        <span class="quality-indicator quality-high"></span>IPL T20
-                    </button>
-
-                    <!-- Football Streams -->
-                    <button class="server-button" data-server="hungary">
-                        <span class="quality-indicator quality-high"></span>Hungary
-                    </button>
-                    <button class="server-button" data-server="spain">
-                        <span class="quality-indicator quality-high"></span>Spain
-                    </button>
-                    <button class="server-button" data-server="france">
-                        <span class="quality-indicator quality-high"></span>France
-                    </button>
-                    <button class="server-button" data-server="germany">
-                        <span class="quality-indicator quality-high"></span>Germany
-                    </button>
-                    <button class="server-button" data-server="portugal">
-                        <span class="quality-indicator quality-high"></span>Portugal
-                    </button>
-                    <button class="server-button" data-server="belgium">
-                        <span class="quality-indicator quality-high"></span>Belgium
-                    </button>
-                    <button class="server-button" data-server="mutv">
-                        <span class="quality-indicator quality-high"></span>MUTV
-                    </button>
-                    <button class="server-button" data-server="sports5">
-                        <span class="quality-indicator quality-high"></span>Sports 5
-                    </button>
-                    <button class="server-button" data-server="laliga1">
-                        <span class="quality-indicator quality-high"></span>La Liga
-                    </button>
-                    <button class="server-button" data-server="tnt1">
-                        <span class="quality-indicator quality-high"></span>TNT 1
-                    </button>
-                    <button class="server-button" data-server="tnt2">
-                        <span class="quality-indicator quality-high"></span>TNT 2
-                    </button>
-                    <button class="server-button" data-server="tnt3">
-                        <span class="quality-indicator quality-high"></span>TNT 3
-                    </button>
-                    <button class="server-button" data-server="s10">
-                        <span class="quality-indicator quality-high"></span>Server 10
-                    </button>
-                    <button class="server-button" data-server="sky4">
-                        <span class="quality-indicator quality-high"></span>Sky 4
-                    </button>
-                    <button class="server-button" data-server="v18">
-                        <span class="quality-indicator quality-high"></span>V18
+                        <span class="quality-indicator quality-high"></span>IPL T20 HD
                     </button>
                 </div>
+            </div>
+
+            <!-- SEO Content Section -->
+            <div class="seo-content" style="margin-top: 2rem; padding: 1.5rem; background: var(--card-color); border-radius: 12px;">
+                <h2>IPL 2024 Live Streaming Guide</h2>
+                <p>Welcome to CryptoNewSpot's official IPL 2024 live streaming platform. We provide high-quality, reliable streaming for all IPL matches throughout the season.</p>
+                
+                <h3>Features of Our IPL Live Streaming Service:</h3>
+                <ul>
+                    <li>Multiple HD streaming servers for uninterrupted viewing</li>
+                    <li>Mobile-friendly interface for on-the-go streaming</li>
+                    <li>Real-time match updates and commentary</li>
+                    <li>Free access to all IPL matches</li>
+                    <li>Compatible with all devices and browsers</li>
+                </ul>
+
+                <h3>How to Watch IPL 2024 Live:</h3>
+                <ol>
+                    <li>Select your preferred streaming server from the options above</li>
+                    <li>Click on the server button to start streaming</li>
+                    <li>If one server doesn't work, try another from our list</li>
+                    <li>Enjoy the match in HD quality</li>
+                </ol>
+
+                <h3>Supported Devices:</h3>
+                <ul>
+                    <li>Desktop computers and laptops</li>
+                    <li>Mobile phones and tablets</li>
+                    <li>Smart TVs with web browsers</li>
+                    <li>Gaming consoles with web browsers</li>
+                </ul>
+
+                <p>Bookmark CryptoNewSpot for the best IPL 2024 live streaming experience. We regularly update our servers to ensure uninterrupted streaming throughout the tournament.</p>
             </div>
         </div>
     </main>
@@ -509,8 +520,8 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>© 2024 CaveLive. All rights reserved.</p>
-                <p>Disclaimer: Streams are provided by third-party sources.</p>
+                <p>© 2024 CryptoNewSpot. All rights reserved.</p>
+                <p>Disclaimer: Streams are provided by third-party sources. We do not host any content.</p>
             </div>
         </div>
     </footer>

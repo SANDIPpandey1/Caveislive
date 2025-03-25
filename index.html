@@ -3,31 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CaveLive - Watch Live Cricket & Sports Streaming | IPL 2024 Live</title>
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Watch live cricket streaming on CaveLive. Get HD quality IPL 2024 live matches, cricket world cup, and international cricket. Multiple servers and mobile-friendly streaming.">
-    <meta name="keywords" content="live cricket streaming, IPL 2024 live, cricket live stream, live sports, cricket match today, IPL live score, HD cricket streaming">
-    <meta name="author" content="CaveLive">
+    <!-- Primary Meta Tags -->
+    <title>IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot</title>
+    <meta name="title" content="IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot">
+    <meta name="description" content="Watch IPL 2024 live streaming in HD quality on CryptoNewSpot. Free live cricket streaming with multiple servers, mobile-friendly interface, and real-time match updates. Stream all IPL matches, including playoffs and finals.">
+    <meta name="keywords" content="IPL 2024 live streaming, cricket live streaming, IPL matches, T20 cricket, live cricket, HD cricket streaming, mobile cricket streaming, IPL playoffs, cricket matches, sports streaming">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cryptonewspot.com/">
+    <meta property="og:title" content="IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot">
+    <meta property="og:description" content="Watch IPL 2024 live streaming in HD quality on CryptoNewSpot. Free live cricket streaming with multiple servers, mobile-friendly interface, and real-time match updates.">
+    <meta property="og:image" content="https://cryptonewspot.com/assets/images/ipl-2024-banner.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://cryptonewspot.com/">
+    <meta property="twitter:title" content="IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot">
+    <meta property="twitter:description" content="Watch IPL 2024 live streaming in HD quality on CryptoNewSpot. Free live cricket streaming with multiple servers, mobile-friendly interface, and real-time match updates.">
+    <meta property="twitter:image" content="https://cryptonewspot.com/assets/images/ipl-2024-banner.jpg">
+    
+    <!-- Additional SEO Meta Tags -->
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="CaveLive - Watch Live Cricket & Sports Streaming">
-    <meta property="og:description" content="Watch live cricket streaming in HD quality. IPL 2024, World Cup, and international matches live on CaveLive.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cavelive.net/">
-    <meta property="og:image" content="https://cavelive.net/images/cavelive-banner.jpg">
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CaveLive - Live Cricket Streaming">
-    <meta name="twitter:description" content="Watch live cricket streaming in HD quality. IPL 2024 and more live on CaveLive.">
-    <meta name="twitter:image" content="https://cavelive.net/images/cavelive-banner.jpg">
+    <meta name="author" content="CryptoNewSpot">
+    <meta name="revisit-after" content="1 days">
+    <meta name="generator" content="CryptoNewSpot">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://cryptonewspot.com/">
 
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="canonical" href="https://cavelive.net/">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -43,8 +51,8 @@
         "sport": "Cricket",
         "broadcaster": {
             "@type": "Organization",
-            "name": "CaveLive",
-            "url": "https://cavelive.net"
+            "name": "CryptoNewSpot",
+            "url": "https://cryptonewspot.com"
         }
 }
 </script>
@@ -85,11 +93,27 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary-color);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
         }
 
         .matches-grid {
@@ -319,7 +343,14 @@
 <body>
     <header>
         <div class="container">
-            <a href="/Caveislive/" class="logo">CaveLive</a>
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24">
+                        <path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm0 2.84L19.5 12H18v7h-4v-6H8v6H4v-7H2.5L12 4.84z"/>
+                    </svg>
+                    CryptoNewSpot
+                </a>
+            </div>
         </div>
     </header>
 
@@ -371,8 +402,10 @@
 
     <footer>
         <div class="container">
-            <p>© 2024 CaveLive. All rights reserved.</p>
-            <p>Disclaimer: We do not host any videos. All content is provided by third-party sources.</p>
+            <div class="footer-content">
+                <p>© 2024 CryptoNewSpot. All rights reserved.</p>
+                <p>Disclaimer: Streams are provided by third-party sources. We do not host any content.</p>
+            </div>
         </div>
     </footer>
 
