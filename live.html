@@ -304,6 +304,7 @@
             font-weight: 500;
             transition: all 0.2s;
             text-align: center;
+            position: relative;
         }
 
         .server-button:hover {
@@ -314,6 +315,26 @@
         .server-button.active {
             background-color: var(--primary-color);
             box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        }
+
+        .server-status {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #94a3b8;
+        }
+
+        .server-status.working {
+            background-color: var(--success-color);
+            box-shadow: 0 0 8px var(--success-color);
+        }
+
+        .server-status.error {
+            background-color: var(--error-color);
+            box-shadow: 0 0 8px var(--error-color);
         }
 
         .error-message {
@@ -488,6 +509,9 @@
                     <button class="server-button" data-server="sky3ii">
                         <span class="quality-indicator quality-high"></span>IPL T20 HD
                     </button>
+                    <button class="server-button" data-server="ipl15">
+                        <span class="quality-indicator quality-high"></span>IPL T20 HD
+                    </button>
                 </div>
             </div>
 
@@ -542,12 +566,14 @@
                 // IPL Live Streams
                 ppv: 'https://director.taihotel.asia/v3/director/VE1ODgzYTAxZjAzMGMyLTc1Y2ItNDJlNC0zMDM3LTQ2MzNlYTJl/master.m3u8',
                 s11: 'https://mtsft.ruscfd.lat/720p.m3u8',
-                tsports: 'https://funn-g1163.huibo.tv/DGI/H2520/chunks.m3u8?p=49&cf=1742825082&d=&ip=126.115.249.216&e=1742925682&h=868d24408df3921af09593e283c6a7b1',
+                tsports: 'https://yosintv3.github.io/livee/live.html?id=tsports',
+                tsports_direct: 'https://funn-g1163.huibo.tv/DGI/H2520/chunks.m3u8?p=49&cf=1742825082&d=&ip=126.115.249.216&e=1742925682&h=868d24408df3921af09593e283c6a7b1',
                 glive: 'https://tv.bdixtv24.co/ayna/play.php?id=f1e1b6c8-9a1b-492d-bdf9-b63295e6073e',
                 bd: 'https://www.glivestreaming.com/livetv/13/slivehub/slivehub/18702784/1738071071078-5986dc-c913-1317d-96cannie5-13625aa/3fba6bd41bef4d6c16b67fd6be89b6fb/126.115.249.216/1742721953?=&lang=en&017efd8d37e0ae3315be8052b76d9e20',
                 sky1: 'https://director.taihotel.asia/v3/director/VE1Y2JkNjQzNmEwYTFmLWZjOGEtZDRjNC0xY2Q5LWNjODQ5MDkx/master.m3u8',
                 sky3: 'https://jf5.dunyapurkaraja.com:999/hls/sky3nz.m3u8?md5=XGOAA0kJBlQFPM-081bCSQ&expires=1742629018',
-                sky3ii: 'https://director.taihotel.asia/v4/variant/VE1gTdz0mLzRnLv52bt9SMhFjdtM3ajFmc09CNkhjYzYTNzQ2MyQWL1UzYh1iYhZDNtQmZyQWLjV2Y5IDO2E2L.m3u8'
+                sky3ii: 'https://director.taihotel.asia/v4/variant/VE1gTdz0mLzRnLv52bt9SMhFjdtM3ajFmc09CNkhjYzYTNzQ2MyQWL1UzYh1iYhZDNtQmZyQWLjV2Y5IDO2E2L.m3u8',
+                ipl15: 'https://funn-g1163.huibo.tv/GE/H15/chunks.m3u8?p=46&cf=1742997600&d=&ip=126.115.249.216&e=1749998200&h=b1ede91b7df9b6cdae13da19379abefb'
             },
             'football': {
                 // Football Live Streams
@@ -727,6 +753,47 @@
             videoPlayer.play().catch(console.error);
         }
 
+        // Add server status checking functionality
+        function checkServerStatus(server) {
+            const button = document.querySelector(`[data-server="${server}"]`);
+            if (!button) return;
+
+            // Add status indicator if not exists
+            let statusIndicator = button.querySelector('.server-status');
+            if (!statusIndicator) {
+                statusIndicator = document.createElement('div');
+                statusIndicator.className = 'server-status';
+                button.appendChild(statusIndicator);
+            }
+
+            const url = streamUrls[matchId][server];
+            if (!url) {
+                statusIndicator.className = 'server-status error';
+                return;
+            }
+
+            // Check if URL is a wrapper URL
+            if (url.includes('yosintv3.github.io') || url.includes('yosintv2.github.io')) {
+                statusIndicator.className = 'server-status working';
+                return;
+            }
+
+            // For direct HLS streams, try to fetch the manifest
+            fetch(url, {
+                method: 'HEAD',
+                mode: 'no-cors',
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+                }
+            })
+            .then(() => {
+                statusIndicator.className = 'server-status working';
+            })
+            .catch(() => {
+                statusIndicator.className = 'server-status error';
+            });
+        }
+
         // Update server buttons
         function updateServerButtons() {
             const buttons = document.querySelectorAll('.server-button');
@@ -737,8 +804,14 @@
                 // Show/hide buttons based on match type
                 if (matchId === 'ipl2') {
                     button.style.display = serverId in streamUrls['ipl2'] ? 'block' : 'none';
+                    if (serverId in streamUrls['ipl2']) {
+                        checkServerStatus(serverId);
+                    }
                 } else if (matchId === 'football') {
                     button.style.display = serverId in streamUrls['football'] ? 'block' : 'none';
+                    if (serverId in streamUrls['football']) {
+                        checkServerStatus(serverId);
+                    }
                 }
             });
         }
@@ -757,7 +830,13 @@
         });
 
         // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', initializeStream);
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeStream();
+            // Check all server statuses after a short delay
+            setTimeout(() => {
+                updateServerButtons();
+            }, 1000);
+        });
 </script>
 </body>
 </html>
