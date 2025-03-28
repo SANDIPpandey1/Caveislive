@@ -218,7 +218,7 @@
             margin: 0 auto;
         }
 
-        .video-container iframe {
+        .video-container video {
             position: absolute;
             top: 0;
             left: 0;
@@ -469,7 +469,7 @@
                     <div id="loadingOverlay" class="loading-overlay">
                         <div class="spinner"></div>
                     </div>
-                    <iframe id="videoPlayer" src="https://iframv2.embedxt.site/iframe/frame.php" width="100%" height="100%" style="border:none;"></iframe>
+                    <video id="videoPlayer" controls playsinline></video>
                 </div>
                 <div class="match-info">
                     <h1 class="match-title" id="matchTitle">IPL 2024 Live Streaming</h1>
@@ -485,7 +485,16 @@
                 <h2 class="server-title">Select Streaming Server</h2>
                 <div class="server-buttons" id="serverButtons">
                     <!-- IPL Streams -->
-                    <button class="server-button" data-server="ipl17">
+                    <button class="server-button" data-server="sky3ii">
+                        <span class="quality-indicator quality-high"></span>IPL T20 HD (not working)
+                    </button>
+                    <button class="server-button" data-server="ipl15">
+                        <span class="quality-indicator quality-high"></span>IPL T20 HD <br>( working )
+                    </button>
+                    <button class="server-button" data-server="ipl16">
+                        <span class="quality-indicator quality-high"></span>IPL T20 HD <br>( working )
+                    </button>
+                    <button class="server-button" data-server="iframe">
                         <span class="quality-indicator quality-high"></span>IPL T20 HD <br>( working )
                     </button>
                 </div>
@@ -540,13 +549,16 @@
         const streamUrls = {
             'ipl2': {
                 // IPL Live Streams
-                ipl17: 'https://iframv2.embedxt.site/iframe/frame.php'
+                sky3ii: 'https://director.taihotel.asia/v4/variant/VE1gTdz0mLzRnLv52bt9SMhFjdtM3ajFmc09CNkhjYzYTNzQ2MyQWL1UzYh1iYhZDNtQmZyQWLjV2Y5IDO2E2L.m3u8',
+                ipl15: 'https://funn-g1163.huibo.tv/GE/H15/chunks.m3u8?p=46&cf=1742997600&d=&ip=126.115.249.216&e=1749998200&h=b1ede91b7df9b6cdae13da19379abefb',
+                ipl16: 'https://funn-g1163.huibo.tv/GE/H11/chunks.m3u8?p=46&cf=1743082278&d=&ip=126.115.249.216&e=1749082878&h=f1f1662252be96626b5ef1dcd6b0a58c',
+                iframe: 'https://iframv2.embedxt.site/iframe/frame.php'
             },
             'football': {
                 // Football Live Streams
                 hungary: 'https://funn-g1163.huibo.tv/GE/H523/chunks.m3u8?p=47&cf=1742749324&d=&ip=126.115.249.216&e=1742799924&h=14a1586834522e7ab0dfda16b61ba4d4',
-                barcelona: 'https://director.taihotel.asia/v3/director/VE1Nzc0MmE3ZjMxNTMwLTNmYjktMzI3NC03NTkyLTMyNmM0YmI3/master.m3u8',
-                barcelonaa: 'https://funn-g1163.huibo.tv/GE/H510/chunks.m3u8?p=47&cf=1742946928&d=&ip=126.115.249.216&e=1742997528&h=0ddb96ae1e21f8c8ec1309e15298ce17',
+                brazil: 'https://hls.uouetrq19.com/live/hd-en-6Mr9gDFPnw8ZEzRxGo.m3u8?txSecret=2fef89ca4fd70196e909bf041c8bb015&txTime=67E495F3',
+                brazill: 'https://funn-g1163.huibo.tv/GE/H510/chunks.m3u8?p=47&cf=1742946928&d=&ip=126.115.249.216&e=1742997528&h=0ddb96ae1e21f8c8ec1309e15298ce17',
                 france: 'https://director.taihotel.asia/v3/director/VE1ZjMwMDcxMjYzYTUxLTdiN2EtZDg5NC00OGM4LTc1NjI0MTg2/master.m3u8',
                 germany: 'https://director.taihotel.asia/v3/director/VE1NGQ4YjM2NTNkMzJkLTU1Y2EtYmE2NC1kZjJkLWNlYzkyODZh/master.m3u8',
                 portugal: 'https://director.taihotel.asia/v3/director/VE1OWMwMWIyNTQ3MmU0LTIyNDgtNzMxNC02NWY2LWU4MTA0ZmI5/master.m3u8',
@@ -600,7 +612,7 @@
         function setURL(matchId, server) {
             const loadingOverlay = document.getElementById('loadingOverlay');
             const errorMessage = document.getElementById('errorMessage');
-            const videoPlayer = document.getElementById('videoPlayer');
+            const videoContainer = document.querySelector('.video-container');
             
             loadingOverlay.style.display = 'flex';
             errorMessage.style.display = 'none';
@@ -612,17 +624,47 @@
 
             const url = streamUrls[matchId][server];
 
-            // For embedded iframe content
-            if (url.includes('embedxt.site')) {
-                videoPlayer.src = url;
-                loadingOverlay.style.display = 'none';
+            // Handle iframe URLs
+            if (server === 'iframe') {
+                // Destroy existing HLS instance if any
+                if (hls) {
+                    hls.destroy();
+                    hls = null;
+                }
+
+                // Clear existing content
+                videoContainer.innerHTML = `
+                    <div id="loadingOverlay" class="loading-overlay">
+                        <div class="spinner"></div>
+                    </div>
+                    <div id="iframeWrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+                        <iframe src="${url}" style="width: 100%; height: 100%; border: none;"></iframe>
+                    </div>
+                `;
+
+                // Update loading overlay reference
+                const newLoadingOverlay = document.getElementById('loadingOverlay');
+                newLoadingOverlay.style.display = 'none';
                 return;
             }
 
-            // For HLS streams
+            // For non-iframe servers
+            // Clear existing content
+            videoContainer.innerHTML = `
+                <div id="loadingOverlay" class="loading-overlay">
+                    <div class="spinner"></div>
+                </div>
+                <video id="videoPlayer" controls playsinline></video>
+            `;
+
+            // Get new references after DOM update
+            const videoPlayer = document.getElementById('videoPlayer');
+            const newLoadingOverlay = document.getElementById('loadingOverlay');
+
+            // Create new HLS instance
             if (Hls.isSupported()) {
                 hls = new Hls({
-                    debug: true, // Enable debug mode to see errors
+                    debug: true,
                     enableWorker: true,
                     lowLatencyMode: true,
                     backBufferLength: 90,
@@ -652,17 +694,17 @@
                         
                         xhr.setRequestHeader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
                     },
-                    manifestLoadingTimeOut: 20000, // Increase timeout
-                    manifestLoadingMaxRetry: 3,    // Allow retries
-                    levelLoadingTimeOut: 20000,    // Increase segment timeout
-                    levelLoadingMaxRetry: 3        // Allow segment retries
+                    manifestLoadingTimeOut: 20000,
+                    manifestLoadingMaxRetry: 3,
+                    levelLoadingTimeOut: 20000,
+                    levelLoadingMaxRetry: 3
                 });
 
                 hls.loadSource(url);
                 hls.attachMedia(videoPlayer);
 
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    loadingOverlay.style.display = 'none';
+                    newLoadingOverlay.style.display = 'none';
                     videoPlayer.play().catch(function(error) {
                         console.log("Play failed:", error);
                         showPlayButton();
@@ -680,7 +722,7 @@
             else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
                 videoPlayer.src = url;
                 videoPlayer.addEventListener('loadedmetadata', function() {
-                    loadingOverlay.style.display = 'none';
+                    newLoadingOverlay.style.display = 'none';
                     videoPlayer.play().catch(function(error) {
                         console.log("Play failed:", error);
                         showPlayButton();
@@ -697,14 +739,6 @@
         // Handle stream errors
         function handleStreamError() {
             const errorMessage = document.getElementById('errorMessage');
-            const videoPlayer = document.getElementById('videoPlayer');
-            
-            // Don't show error for embedded iframes
-            if (videoPlayer.tagName.toLowerCase() === 'iframe') {
-                errorMessage.style.display = 'none';
-                return;
-            }
-            
             errorMessage.style.display = 'block';
             errorMessage.textContent = 'Stream error. Please try a different server. If all servers fail, the stream may be offline.';
             document.getElementById('loadingOverlay').style.display = 'none';
