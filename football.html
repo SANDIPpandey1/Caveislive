@@ -5,24 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Primary Meta Tags -->
-    <title>IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot</title>
-    <meta name="title" content="IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot">
-    <meta name="description" content="Watch IPL 2024 live streaming in HD quality on CryptoNewSpot. Free live cricket streaming with multiple servers, mobile-friendly interface, and real-time match updates. Stream all IPL matches, including playoffs and finals.">
-    <meta name="keywords" content="IPL 2024 live streaming, cricket live streaming, IPL matches, T20 cricket, live cricket, HD cricket streaming, mobile cricket streaming, IPL playoffs, cricket matches, sports streaming">
+    <title>Football Live Streaming | Watch Football Matches in HD | CryptoNewSpot</title>
+    <meta name="title" content="Football Live Streaming | Watch Football Matches in HD | CryptoNewSpot">
+    <meta name="description" content="Watch live football streaming in HD quality on CryptoNewSpot. Free live football streaming with multiple servers, mobile-friendly interface, and real-time match updates. Stream all major football leagues and tournaments.">
+    <meta name="keywords" content="football live streaming, live football matches, football leagues, live sports streaming, HD football streaming, mobile football streaming, football tournaments, sports streaming">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cryptonewspot.com/">
-    <meta property="og:title" content="IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot">
-    <meta property="og:description" content="Watch IPL 2024 live streaming in HD quality on CryptoNewSpot. Free live cricket streaming with multiple servers, mobile-friendly interface, and real-time match updates.">
-    <meta property="og:image" content="https://cryptonewspot.com/assets/images/ipl-2024-banner.jpg">
+    <meta property="og:url" content="https://cryptonewspot.com/football.html">
+    <meta property="og:title" content="Football Live Streaming | Watch Football Matches in HD | CryptoNewSpot">
+    <meta property="og:description" content="Watch live football streaming in HD quality on CryptoNewSpot. Free live football streaming with multiple servers, mobile-friendly interface, and real-time match updates.">
+    <meta property="og:image" content="https://cryptonewspot.com/assets/images/football-banner.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://cryptonewspot.com/">
-    <meta property="twitter:title" content="IPL 2024 Live Streaming | Watch Cricket Matches in HD | CryptoNewSpot">
-    <meta property="twitter:description" content="Watch IPL 2024 live streaming in HD quality on CryptoNewSpot. Free live cricket streaming with multiple servers, mobile-friendly interface, and real-time match updates.">
-    <meta property="twitter:image" content="https://cryptonewspot.com/assets/images/ipl-2024-banner.jpg">
+    <meta property="twitter:url" content="https://cryptonewspot.com/football.html">
+    <meta property="twitter:title" content="Football Live Streaming | Watch Football Matches in HD | CryptoNewSpot">
+    <meta property="twitter:description" content="Watch live football streaming in HD quality on CryptoNewSpot. Free live football streaming with multiple servers, mobile-friendly interface, and real-time match updates.">
+    <meta property="twitter:image" content="https://cryptonewspot.com/assets/images/football-banner.jpg">
     
     <!-- Additional SEO Meta Tags -->
     <meta name="robots" content="index, follow">
@@ -32,7 +32,7 @@
     <meta name="generator" content="CryptoNewSpot">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://cryptonewspot.com/live.html">
+    <link rel="canonical" href="https://cryptonewspot.com/football.html">
     
     <!-- Microsoft Clarity -->
     <script type="text/javascript">
@@ -65,8 +65,8 @@
         }
 
         * {
-    margin: 0;
-    padding: 0;     
+            margin: 0;
+            padding: 0;     
             box-sizing: border-box;
             font-family: 'Inter', sans-serif;
         }
@@ -212,7 +212,7 @@
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
-    overflow: hidden;
+            overflow: hidden;
             background-color: #000;
             max-width: 100%;
             margin: 0 auto;
@@ -222,8 +222,8 @@
             position: absolute;
             top: 0;
             left: 0;
-    width: 100%;
-    height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
             background: #000;
         }
@@ -395,7 +395,7 @@
 
             .menu-button {
                 background: none;
-    border: none;
+                border: none;
                 color: var(--text-color);
                 cursor: pointer;
                 padding: 0.5rem;
@@ -425,7 +425,7 @@
             text-align: center;
             font-size: 0.875rem;
             color: #94a3b8;
-}
+        }
 </style>
 </head>
 <body>
@@ -440,8 +440,7 @@
                 </a>
                 <nav class="nav-links">
                     <a href="/" class="nav-link">Home</a>
-                    <!--<a href="/live.html" class="nav-link active">Live IPL</a>
-                    <a href="/schedule.html" class="nav-link">IPL Schedule</a>-->
+                  
                     <div class="live-indicator">
                         <span class="live-dot"></span>
                         LIVE
@@ -472,8 +471,8 @@
                     <video id="videoPlayer" controls playsinline></video>
                 </div>
                 <div class="match-info">
-                    <h1 class="match-title" id="matchTitle">IPL 2024 Live Streaming</h1>
-                    <p class="match-details" id="matchDetails">Watch IPL 2024 matches in HD quality with multiple streaming options</p>
+                    <h1 class="match-title" id="matchTitle">Football Live Streaming</h1>
+                    <p class="match-details" id="matchDetails">Watch live football matches in HD quality with multiple streaming options</p>
                 </div>
             </div>
 
@@ -484,40 +483,73 @@
             <div class="server-controls">
                 <h2 class="server-title">Select Streaming Server</h2>
                 <div class="server-buttons" id="serverButtons">
-                    <!-- IPL Streams -->
-                    <button class="server-button" data-server="sky3ii">
-                        <span class="quality-indicator quality-high"></span>IPL T20 HD (not working)
+                    <!-- Football Streams -->
+                    <button class="server-button" data-server="hungary">
+                        <span class="quality-indicator quality-high"></span>Hungary vs Serbia <br>( working )
                     </button>
-                    <button class="server-button" data-server="ipl15">
-                        <span class="quality-indicator quality-high"></span>IPL T20 HD <br>( working )
+                    <button class="server-button" data-server="brazil">
+                        <span class="quality-indicator quality-high"></span>Brazil vs Mexico <br>( working )
                     </button>
-                    <button class="server-button" data-server="ipl16">
-                        <span class="quality-indicator quality-high"></span>IPL T20 HD <br>( working )
+                    <button class="server-button" data-server="brazill">
+                        <span class="quality-indicator quality-high"></span>Brazil vs Mexico <br>( working )
                     </button>
-                    <button class="server-button" data-server="glive">
-                        <span class="quality-indicator quality-high"></span>IPL T20 HD <br>( not working )
+                    <button class="server-button" data-server="france">
+                        <span class="quality-indicator quality-high"></span>France vs Germany <br>( working )
                     </button>
-                    <button class="server-button" data-server="iframe">
-                        <span class="quality-indicator quality-high"></span>IPL T20 HD <br>( working )
+                    <button class="server-button" data-server="germany">
+                        <span class="quality-indicator quality-high"></span>Germany vs France <br>( working )
+                    </button>
+                    <button class="server-button" data-server="portugal">
+                        <span class="quality-indicator quality-high"></span>Portugal vs Spain <br>( working )
+                    </button>
+                    <button class="server-button" data-server="belgium">
+                        <span class="quality-indicator quality-high"></span>Belgium vs Netherlands <br>( working )
+                    </button>
+                    <button class="server-button" data-server="mutv">
+                        <span class="quality-indicator quality-high"></span>MUTV HD <br>( working )
+                    </button>
+                    <button class="server-button" data-server="sports5">
+                        <span class="quality-indicator quality-high"></span>Sports 5 HD <br>( working )
+                    </button>
+                    <button class="server-button" data-server="laliga1">
+                        <span class="quality-indicator quality-high"></span>La Liga HD <br>( working )
+                    </button>
+                    <button class="server-button" data-server="tnt1">
+                        <span class="quality-indicator quality-high"></span>TNT Sports 1 <br>( working )
+                    </button>
+                    <button class="server-button" data-server="tnt2">
+                        <span class="quality-indicator quality-high"></span>TNT Sports 2 <br>( working )
+                    </button>
+                    <button class="server-button" data-server="tnt3">
+                        <span class="quality-indicator quality-high"></span>TNT Sports 3 <br>( working )
+                    </button>
+                    <button class="server-button" data-server="s10">
+                        <span class="quality-indicator quality-high"></span>Sky Sports 10 <br>( working )
+                    </button>
+                    <button class="server-button" data-server="sky4">
+                        <span class="quality-indicator quality-high"></span>Sky Sports 4 <br>( working )
+                    </button>
+                    <button class="server-button" data-server="v18">
+                        <span class="quality-indicator quality-high"></span>Sports 18 <br>( working )
                     </button>
                 </div>
             </div>
 
             <!-- SEO Content Section -->
             <div class="seo-content" style="margin-top: 2rem; padding: 1.5rem; background: var(--card-color); border-radius: 12px;">
-                <h2>IPL 2024 Live Streaming Guide</h2>
-                <p>Welcome to CryptoNewSpot's official IPL 2024 live streaming platform. We provide high-quality, reliable streaming for all IPL matches throughout the season.</p>
+                <h2>Football Live Streaming Guide</h2>
+                <p>Welcome to CryptoNewSpot's official football live streaming platform. We provide high-quality, reliable streaming for all major football matches and tournaments.</p>
                 
-                <h3>Features of Our IPL Live Streaming Service:</h3>
+                <h3>Features of Our Football Live Streaming Service:</h3>
                 <ul>
                     <li>Multiple HD streaming servers for uninterrupted viewing</li>
                     <li>Mobile-friendly interface for on-the-go streaming</li>
                     <li>Real-time match updates and commentary</li>
-                    <li>Free access to all IPL matches</li>
+                    <li>Free access to all major football matches</li>
                     <li>Compatible with all devices and browsers</li>
                 </ul>
 
-                <h3>How to Watch IPL 2024 Live:</h3>
+                <h3>How to Watch Football Live:</h3>
                 <ol>
                     <li>Select your preferred streaming server from the options above</li>
                     <li>Click on the server button to start streaming</li>
@@ -533,7 +565,7 @@
                     <li>Gaming consoles with web browsers</li>
                 </ul>
 
-                <p>Bookmark CryptoNewSpot for the best IPL 2024 live streaming experience. We regularly update our servers to ensure uninterrupted streaming throughout the tournament.</p>
+                <p>Bookmark CryptoNewSpot for the best football live streaming experience. We regularly update our servers to ensure uninterrupted streaming throughout the season.</p>
             </div>
         </div>
     </main>
@@ -550,14 +582,6 @@
 <script>
         // Stream URLs for different matches with actual HLS streams
         const streamUrls = {
-            'ipl2': {
-                // IPL Live Streams
-                sky3ii: 'https://director.taihotel.asia/v4/variant/VE1gTdz0mLzRnLv52bt9SMhFjdtM3ajFmc09CNkhjYzYTNzQ2MyQWL1UzYh1iYhZDNtQmZyQWLjV2Y5IDO2E2L.m3u8',
-                ipl15: 'https://funn-g1163.huibo.tv/GE/H15/chunks.m3u8?p=46&cf=1742997600&d=&ip=126.115.249.216&e=1749998200&h=b1ede91b7df9b6cdae13da19379abefb',
-                ipl16: 'https://funn-g1163.huibo.tv/GE/H11/chunks.m3u8?p=46&cf=1743082278&d=&ip=126.115.249.216&e=1749082878&h=f1f1662252be96626b5ef1dcd6b0a58c',
-                iframe: 'https://iframv2.embedxt.site/iframe/frame.php',
-                glive: 'https://funn-g1163.huibo.tv/GPA/H911/chunks.m3u8?p=48&cf=1743256933&d=&ip=126.115.249.216&e=1743757533&h=c7b73eed7651fd92288bbeeac92da35c',    // IPL T20 not working
-            },
             'football': {
                 // Football Live Streams
                 hungary: 'https://funn-g1163.huibo.tv/GE/H523/chunks.m3u8?p=47&cf=1742749324&d=&ip=126.115.249.216&e=1742799924&h=14a1586834522e7ab0dfda16b61ba4d4',
@@ -584,8 +608,8 @@
         
         // Get match ID from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const matchId = urlParams.get('id') || 'ipl2';
-        let currentServer = 'ppv'; // Default to IPL PPV
+        const matchId = urlParams.get('id') || 'football';
+        let currentServer = 'hungary'; // Default to Hungary vs Serbia
         let retryCount = 0;
         const maxRetries = 3;
 
@@ -599,13 +623,11 @@
         // Set match information
         function setMatchInfo(matchId) {
             const matchTitles = {
-                'ipl2': 'IPL 2024 Live',
-                'football': 'Football Live'
+                'football': 'Football Live Streaming'
             };
 
             const matchDetails = {
-                'ipl2': 'Live Cricket Streaming',
-                'football': 'Live Football Streaming'
+                'football': 'Watch live football matches in HD quality with multiple streaming options'
             };
 
             document.getElementById('matchTitle').textContent = matchTitles[matchId] || 'Live Match';
@@ -628,31 +650,6 @@
 
             const url = streamUrls[matchId][server];
 
-            // Handle iframe URLs
-            if (server === 'iframe') {
-                // Destroy existing HLS instance if any
-                if (hls) {
-                    hls.destroy();
-                    hls = null;
-                }
-
-                // Clear existing content
-                videoContainer.innerHTML = `
-                    <div id="loadingOverlay" class="loading-overlay">
-                        <div class="spinner"></div>
-                    </div>
-                    <div id="iframeWrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
-                        <iframe src="${url}" style="width: 100%; height: 100%; border: none;"></iframe>
-                    </div>
-                `;
-
-                // Update loading overlay reference
-                const newLoadingOverlay = document.getElementById('loadingOverlay');
-                newLoadingOverlay.style.display = 'none';
-                return;
-            }
-
-            // For non-iframe servers
             // Clear existing content
             videoContainer.innerHTML = `
                 <div id="loadingOverlay" class="loading-overlay">
@@ -664,6 +661,12 @@
             // Get new references after DOM update
             const videoPlayer = document.getElementById('videoPlayer');
             const newLoadingOverlay = document.getElementById('loadingOverlay');
+
+            // Destroy existing HLS instance if any
+            if (hls) {
+                hls.destroy();
+                hls = null;
+            }
 
             // Create new HLS instance
             if (Hls.isSupported()) {
@@ -786,12 +789,6 @@
                 return;
             }
 
-            // Check if URL is a wrapper URL
-            if (url.includes('yosintv3.github.io') || url.includes('yosintv2.github.io')) {
-                statusIndicator.className = 'server-status working';
-                return;
-            }
-
             // For direct HLS streams, try to fetch the manifest
             fetch(url, {
                 method: 'HEAD',
@@ -816,12 +813,7 @@
                 button.classList.toggle('active', serverId === currentServer);
                 
                 // Show/hide buttons based on match type
-                if (matchId === 'ipl2') {
-                    button.style.display = serverId in streamUrls['ipl2'] ? 'block' : 'none';
-                    if (serverId in streamUrls['ipl2']) {
-                        checkServerStatus(serverId);
-                    }
-                } else if (matchId === 'football') {
+                if (matchId === 'football') {
                     button.style.display = serverId in streamUrls['football'] ? 'block' : 'none';
                     if (serverId in streamUrls['football']) {
                         checkServerStatus(serverId);
@@ -853,4 +845,4 @@
         });
 </script>
 </body>
-</html>
+</html> 
